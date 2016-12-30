@@ -2,18 +2,24 @@
    :target: https://www.gnu.org/licenses/lgpl.html
    :alt: License: LGPL-3
 
-=========================
-CRM with Operating Units
-=========================
+=======================
+Sale CRM Operating Unit
+=======================
 
 This module introduces the following features:
 
-* Adds the Operating Unit (OU) to the Lead.
+* Passes the Operating Unit (OU) from Opportunity to Quotation.
 
-* The user's default Operating Unit (OU) is proposed at the time of creating the Lead / Opportunity.
 
-* Security rules are defined to ensure that users can only see the Opportunity / Lead of that Operating Units in which they are allowed access to.
+Installation
+============
 
+No specific installation requirements.
+
+Configuration
+=============
+
+No configuration is required. 
 
 Usage
 =====
