@@ -2,7 +2,7 @@
 # © 2016 Eficent Business and IT Consulting Services S.L.
 # © 2016 Serpent Consulting Services Pvt. Ltd.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
-from openerp import api, fields, models, _
+from openerp import _, api, exceptions, fields, models
 
 
 class AccountPayment(models.Model):
@@ -23,7 +23,14 @@ class AccountPayment(models.Model):
         res = super(AccountPayment,
                     self)._get_counterpart_move_line_vals(invoice=invoice)
         if invoice:
-            res['operating_unit_id'] = invoice.operating_unit_id.id or False
+            operating_units = []
+            for inv in invoice:
+                operating_units.append(inv.operating_unit_id.id)
+            if len(set(operating_units)) > 1:
+                raise exceptions.ValidationError(
+                    _('The payment must be of invoices of the same'
+                        ' Operating Units.'))
+            res['operating_unit_id'] = operating_units[0] or False
         else:
             res['operating_unit_id'] = self.operating_unit_id.id or False
         return res
