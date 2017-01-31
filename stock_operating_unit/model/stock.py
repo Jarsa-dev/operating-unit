@@ -121,6 +121,10 @@ class StockPicking(models.Model):
     @api.constrains('operating_unit_id', 'picking_type_id')
     def _check_picking_type_operating_unit(self):
         for rec in self:
+            if_drop = rec.picking_type_id
+            if if_drop.default_location_dest_id.usage == 'customer' and\
+                    if_drop.default_location_src_id.usage == 'supplier':
+                continue
             if rec.picking_type_id and rec.operating_unit_id and \
                     rec.picking_type_id.warehouse_id.operating_unit_id != \
                     rec.operating_unit_id:
@@ -134,12 +138,32 @@ class StockMove(models.Model):
 
     operating_unit_id =\
         fields.Many2one('operating.unit',
-                        related='location_id.operating_unit_id',
-                        string='Source Location Operating Unit', readonly=True)
+                        compute='_compute_operating_unit_id',
+                        string='Source Location Operating Unit',)
     operating_unit_dest_id =\
         fields.Many2one('operating.unit',
-                        related='location_dest_id.operating_unit_id',
-                        string='Dest. Location Operating Unit', readonly=True)
+                        compute='_compute_operating_unit_dest_id',
+                        string='Dest. Location Operating Unit',)
+
+    @api.depends('location_id')
+    def _compute_operating_unit_id(self):
+        for rec in self:
+            if rec.location_dest_id.usage == 'customer' and\
+                    rec.location_id.usage == 'supplier':
+                rec.operating_unit_id = rec.picking_id.operating_unit_id.id
+            else:
+                rec.operating_unit_id = rec.location_id.operating_unit_id.id
+
+    @api.depends('location_id')
+    def _compute_operating_unit_dest_id(self):
+        for rec in self:
+            if rec.location_dest_id.usage == 'customer' and\
+                    rec.location_id.usage == 'supplier':
+                rec.operating_unit_dest_id = (
+                    rec.picking_id.operating_unit_id.id)
+            else:
+                rec.operating_unit_dest_id = (
+                    rec.location_id.operating_unit_id.id)
 
     @api.multi
     @api.constrains('operating_unit_id', 'location_id', 'picking_id',
