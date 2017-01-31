@@ -163,7 +163,7 @@ class StockMove(models.Model):
                     rec.picking_id.operating_unit_id.id)
             else:
                 rec.operating_unit_dest_id = (
-                    rec.location_id.operating_unit_id.id)
+                    rec.location_dest_id.operating_unit_id.id)
 
     @api.multi
     @api.constrains('operating_unit_id', 'location_id', 'picking_id',
