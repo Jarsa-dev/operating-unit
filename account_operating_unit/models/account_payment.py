@@ -40,7 +40,7 @@ class AccountPayment(models.Model):
         if not self.journal_id.operating_unit_id:
             raise exceptions.ValidationError(
                 _("Error! \n You must configure an operating"
-                    "unit in the journal. Please Check."))
+                    " unit in the journal. \n Please Check."))
         res['operating_unit_id'] = self.journal_id.operating_unit_id.id
         return res
 
