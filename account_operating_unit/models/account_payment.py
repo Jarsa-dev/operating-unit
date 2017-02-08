@@ -37,8 +37,11 @@ class AccountPayment(models.Model):
 
     def _get_liquidity_move_line_vals(self, amount):
         res = super(AccountPayment, self)._get_liquidity_move_line_vals(amount)
-        res['operating_unit_id'] = self.journal_id.operating_unit_id.id \
-            or False
+        if not self.journal_id.operating_unit_id:
+            raise exceptions.ValidationError(
+                _("Error! \n You must configure an operating"
+                    "unit in the journal. Please Check."))
+        res['operating_unit_id'] = self.journal_id.operating_unit_id.id
         return res
 
     def _get_dst_liquidity_aml_dict_vals(self):
