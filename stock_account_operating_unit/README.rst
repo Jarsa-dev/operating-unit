@@ -18,12 +18,15 @@ If your company is required to generate a balanced balance sheet by
 operating unit you can specify at company level that operating units should
 be self-balanced, and then indicate a self-balancing clearing account.
 
-* Create an account for "Inter-OU Clearing" of type Regular.
-* Go to *Settings / Companies / Configuration* and:
-   ** Set the "Operating Units are self-balanced" checkbox
-   ** Set the "Inter-OU Clearing"  account in "Inter-operating unit clearing
-   account" field.
-* Assign Operating Unit in Accounts.
+#. Create an account for "Inter-OU Clearing" of type Regular.
+#. Go to *Settings / Companies / Configuration* and:
+
+   * Set the "Operating Units are self-balanced" checkbox.
+
+   * Set the "Inter-OU Clearing"  account in "Inter-operating unit clearing
+     account" field.
+
+#. Assign Operating Unit in Accounts.
 
 
 Usage
@@ -35,7 +38,7 @@ within the OU when the journal entries are posted
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/213/9.0
+   :target: https://runbot.odoo-community.org/runbot/213/10.0
 
 Bug Tracker
 ===========
