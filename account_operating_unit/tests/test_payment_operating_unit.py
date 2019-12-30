@@ -12,11 +12,19 @@ class TestInvoiceOperatingUnit(test_ou.TestAccountOperatingUnit):
         """Create and invoice and a subsquent payment, in another OU"""
 
         # Create invoice for B2B operating unit
+<<<<<<< HEAD
         self.invoice = self.move_model.with_user(self.user_id.id).create(
             self._prepare_invoice(self.b2b.id)
         )
         # Validate the invoice
         self.invoice.with_user(self.user_id.id).action_post()
+=======
+        self.invoice = self.invoice_model.with_user(self.user_id.id).create(
+            self._prepare_invoice(self.b2b.id)
+        )
+        # Validate the invoice
+        self.invoice.with_user(self.user_id.id).action_invoice_open()
+>>>>>>> [IMP] account_operating_unit: Migration to V13
 
         # Pay the invoice using a cash journal associated to the main company
         ctx = {"active_model": "account.move", "active_ids": [self.invoice.id]}
