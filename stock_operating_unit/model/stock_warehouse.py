@@ -23,7 +23,6 @@ class StockWarehouse(models.Model):
         default=_default_operating_unit,
     )
 
-    @api.multi
     @api.constrains("operating_unit_id", "company_id")
     def _check_company_operating_unit(self):
         for rec in self:
@@ -43,7 +42,6 @@ class StockWarehouse(models.Model):
 class StockWarehouseOrderPoint(models.Model):
     _inherit = "stock.warehouse.orderpoint"
 
-    @api.multi
     @api.constrains("operating_unit_id", "warehouse_id", "location_id")
     def _check_location(self):
         for rec in self:
